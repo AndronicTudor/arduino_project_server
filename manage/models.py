@@ -7,8 +7,8 @@ class SensorData(models.Model):
     hum = models.IntegerField(null=True, blank=True)
     temp = models.IntegerField(null=True, blank=True)
     lig = models.IntegerField(null=True, blank=True)
-    lat = models.CharField(max_length=7, null=True, blank=True)
-    lon = models.CharField(max_length=7, null=True, blank=True)
+    lat = models.CharField(max_length=9, null=True, blank=True)
+    lon = models.CharField(max_length=9, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
