@@ -11,6 +11,7 @@ class ArduinoApiView(APIView):
         return Response({"detail":"ABC"}, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
+
         data = request.data
         if data.get('hum'):
             data['hum'] = int(data['hum'])
