@@ -69,6 +69,7 @@ class MapsData(APIView):
         data = SensorData.objects.filter().values('lat', 'lon')
         gps_data = []
         for d in data:
-            gps_data.append({'lat': float(d.get('lat')), 'lng': float(d.get('lon'))})
+            if d.get('lat'):
+                gps_data.append({'lat': float(d.get('lat')), 'lng': float(d.get('lon'))})
         data = {'gps_data': gps_data}
         return Response(data, status.HTTP_200_OK)
