@@ -37,11 +37,18 @@ class ArduinoApiView(APIView):
 class ArduinoGet(APIView):
 
     def get(self, request, slug, format=None):
-        temps = SensorData.objects.filter(ard_id=slug)\
-                                  .values_list('temp', flat=True)
-        temp_max = max(temps)
-        temp_min = min(temps)
-        data = {'temp_max': temp_max, 'temp_min':temp_min }
+        data = SensorData.objects.filter(ard_id=slug).values('temp', 'hum', 'lig')
+        temp = []
+        hum = []
+        lig = []
+        for d in data:
+            temp.append(d.get('temp'))
+            hum.append(d.get('hum'))
+            lig.append(d.get('lig'))
+        sensor_data = [max(temp), min(temp), max(hum), min(hum),
+                       max(lig), min(lig)]
+        data = {'t_max': max(temp), 't_min': min(temp), 'h_max': max(hum), 'h_min': min(hum), 'l_max': max(lig),
+                'l_min': min(lig)}
         return Response(data, status.HTTP_200_OK)
 
 
